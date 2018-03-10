@@ -13,12 +13,10 @@
 
 <script>
 import axios from 'axios';
-import {localisation, forecast10Days, getlocalisation, posi} from '@/scripts/lab6';
+import {localisation, forecast10Days, getlocalisation, posi, getData} from '@/scripts/lab6';
 
 var keyID = '48403928956201e4';
 var url = 'https://glo3102lab4.herokuapp.com/fbbda809-4905-49e5-a331-30f8cb19f30a/tasks';
-
-
 
 export default {
   name: 'Titre',
@@ -33,6 +31,7 @@ export default {
   methods: {
     faitLaJob() {
       getlocalisation();
+      getData();
       this.pos = posi;
       this.forecasts = forecast10Days;
     },
