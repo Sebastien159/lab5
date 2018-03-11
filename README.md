@@ -1,4 +1,4 @@
-# lab5
+# lab6
 
 > A Vue.js project
 
