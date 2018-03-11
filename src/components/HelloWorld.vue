@@ -1,19 +1,23 @@
 <template>
-  <div class="hello">
+  <div>
     <h1>{{ msg }}</h1>
-    <button @click="faitLaJob">Donner votre localisation et voir les prévisions</button>
+    <button v-on:click="faitLaJob">Donner votre localisation</button>
+    <button v-on:click="faitLaJob2">Voir les prévisions</button>
     <h2>{{pos}}</h2>
     <ul>
-      <li v-for="forecast in forecasts">
-        {{forecast}}
+      <li v-for="forecast in forecasts" v-if="((forecast.period % 2) == 0) && forecast.period <= 12">
+        <div>{{forecast.title}}</div>
+        <div><img v-bind:src="forecast.icon_url"></div>
+        <div class="espaceBottom">{{forecast.fcttext_metric}}</div>
       </li>
     </ul>
   </div>
 </template>
 
+
 <script>
 import axios from 'axios';
-import {localisation, forecast10Days, getlocalisation, posi, getData} from '@/scripts/lab6';
+import {getlocalisation, getForecast} from '@/scripts/lab6';
 
 var keyID = '48403928956201e4';
 var url = 'https://glo3102lab4.herokuapp.com/fbbda809-4905-49e5-a331-30f8cb19f30a/tasks';
@@ -30,18 +34,12 @@ export default {
 
   methods: {
     faitLaJob() {
-      getlocalisation();
-      getData();
-      this.pos = posi;
-      this.forecasts = forecast10Days;
+      this.pos = getlocalisation();
     },
 
-    getTasks(){
-      alert('BONJOUR!');
-      fetch(urlget)
-        .then((resp) => resp.json()) // Transform the data into json
-        .then((data) =>  this.todos = data.tasks);
-    }
+    faitLaJob2() {
+      this.forecasts = getForecast();
+    },
   },
 }
 
@@ -49,6 +47,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  div.espaceBottom {
+    padding-bottom: 5%;
+  }
+
 h1, h2 {
   font-weight: normal;
 }

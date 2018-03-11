@@ -1,14 +1,19 @@
 import axios from 'axios';
 
-var localisation = 0;
-var posi = 0;
-var forecast10Days = 0;
+var localisation;
+var posi;
+var forecast10Days;
+var state;
+var pays;
 
 var urlPos = 'http://api.wunderground.com/api/48403928956201e4/geolookup/q/';
 var urlForecast = 'http://api.wunderground.com/api/48403928956201e4/forecast10day/q/'
 var keyID = '48403928956201e4';
 
 function getlocalisation () {
+
+  var stringPosi;
+
   var geoSuccess = function(position) {
     localisation = position;
   };
@@ -16,18 +21,12 @@ function getlocalisation () {
     console.log('Une erreur est survenue!');
   };
   navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
-}
-
-function getData() {
-
-  let state;
-
-  alert(urlPos + localisation.coords.latitude + "," + localisation.coords.longitude + ".json");
 
   axios.get(urlPos + localisation.coords.latitude + "," + localisation.coords.longitude + ".json")
     .then(response => {
       posi = response.data.location.city;
       state = response.data.location.state;
+      pays = response.data.location.country_name;
       console.log(posi);
     })
     .catch(error => {
@@ -35,6 +34,10 @@ function getData() {
       alert(error);
     });
 
+  return stringPosi = pays + ", " + state + ", " + posi;
+}
+
+function getForecast() {
   axios.get(urlForecast + state + "/" + posi + ".json")
     .then(response => {
       forecast10Days = response.data.forecast.txt_forecast.forecastday;
@@ -44,7 +47,11 @@ function getData() {
       alert(error);
     });
 
-  alert(posi);
+  return forecast10Days;
 }
 
-export {localisation, forecast10Days, getlocalisation, posi, getData};
+function getData() {
+
+}
+
+export {localisation, forecast10Days, getlocalisation, posi, getData, getForecast, state, pays};
