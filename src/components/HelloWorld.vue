@@ -1,6 +1,9 @@
 <template>
   <div>
     <h1>{{ msg }}</h1>
+    <h1>{{ msg2 }}</h1>
+    <h1>{{ msg3 }}</h1>
+
     <button v-on:click="faitLaJob">Donner votre localisation</button>
     <button v-on:click="faitLaJob2">Voir les prévisions</button>
     <h2>{{pos}}</h2>
@@ -27,6 +30,8 @@ export default {
   data () {
     return {
       msg: 'Weather.JS',
+      msg2: 'Étape 1 : clicker sur boutton "Donner votre localisation" 3 fois. (I know...)',
+      msg3: 'Étape 2 : clicker sur boutton "Voir les prévisions" 2 fois. (I know...)',
       forecasts: [],
       pos: '',
     }
